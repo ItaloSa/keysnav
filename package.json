@@ -1,0 +1,27 @@
+{
+  "name": "keysnav",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItaloSa/nav-js.git"
+  },
+  "keywords": [
+    "keys",
+    "navigation",
+    "arrow"
+  ],
+  "author": "Italo Sousa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ItaloSa/nav-js/issues"
+  },
+  "homepage": "https://github.com/ItaloSa/nav-js#readme",
+  "devDependencies": {
+    "jest": "^26.0.1"
+  }
+}
