@@ -1,104 +1,118 @@
+(function (root, factory) {
 
-function KeysNav() {
+  var pluginName = 'KeysNav';
 
-  this.lineIndex;
-  this.columnIndex;
-  this.keyRight;
-  this.keyLeft;
-  this.keyUp;
-  this.keyDown;
-  this.selectedClassName;
-  this.grid = null;
-
-  this.setGrid = function (matrix) {
-    this.grid = matrix;
+  if (typeof define === 'function' && define.amd) {
+    define([], factory(pluginName));
+  } else if (typeof exports === 'object') {
+    module.exports = factory(pluginName);
+  } else {
+    root[pluginName] = factory(pluginName);
   }
+}(this, function (pluginName) {
 
-  this.setup = function (options = {
-    lineIndex: 0,
-    columnIndex: 0,
+  'use strict';
+
+  var defaults = {
     keyLeft: 37,
     keyUp: 38,
     keyRight: 39,
     keyDown: 40,
     selectedClassName: 'selected'
-  }) {
-    document.onkeydown = this.handleKeyPress;
-    this.lineIndex = options.lineIndex;
-    this.columnIndex = options.columnIndex;
-    this.keyRight = options.keyRight;
-    this.keyLeft = options.keyLeft;
-    this.keyUp = options.keyUp;
-    this.keyDown = options.keyDown;
-    this.selectedClassName = options.selectedClassName
-  }
-
-  this.removeSelected = function () {
-    var current = this.grid[this.lineIndex][this.columnIndex];
-    var element = document.getElementById(current);
-    var classes = element.classList;
-    var newClass = '';
-    for (i = 0; i < classes.length; i++) {
-      if (classes[i] != this.selectedClassName) {
-        newClass += ' ' + classes[i];
-      }
-    }
-    element.className = newClass;
   };
 
-  this.addSelected = function () {
-    var target = this.grid[this.lineIndex][this.columnIndex];
-    var element = document.getElementById(target);
-    element.className += ' ' + this.selectedClassName;
+  /**
+   * Merge defaults with user options
+   * @param {Object} options User options
+   */
+  var extend = function (options) {
+    var prop;
+    var extended = {};
+    for (prop in defaults) {
+      if (Object.prototype.hasOwnProperty.call(defaults, prop)) {
+        extended[prop] = defaults[prop];
+      }
+    }
+    for (prop in options) {
+      if (Object.prototype.hasOwnProperty.call(options, prop)) {
+        extended[prop] = options[prop];
+      }
+    }
+    return extended;
+  };
+
+  /**
+   * Helper Functions
+   @private
+   */
+  var privateFunction = function () {
+    // Helper function, not directly acessible by instance object
+  };
+
+  /**
+   * Plugin Object
+   * @param {Object} options User options
+   * @constructor
+   */
+  function Plugin(options) {
+    this.grid = null;
+    this.lineIndex = 0;
+    this.columnIndex = 0;
+
+    this.options = extend(options);
+    this.init();
   }
 
-  this.handleKeyPress = function (event) {
-    switch (event.keyCode) {
-      case this.keyUp:
-        this.handleArrowUp();
-        break;
-      case this.keyDown:
-        this.handleArrowDown();
-        break;
-      case this.keyRight:
-        this.handleArrowRight();
-        break;
-      case this.keyLeft:
-        this.handleArrowLeft();
-        break;
-      default:
-        break;
+  /**
+   * Plugin prototype
+   * @public
+   * @constructor
+   */
+  Plugin.prototype = {
+    init: function () {
+      document.onkeydown = this.handleKeyPress.bind(this);
+      return;
+    },
+    setGrid: function(matrix) {
+      this.grid = matrix;
+    },
+    setIndexes: function(line, column) {
+      this.lineIndex = line;
+      this.columnIndex = column;
+    },
+    handleKeyPress: function(event) {
+      switch (event.keyCode) {
+        case this.options.keyUp:
+          handleArrowUp(this);
+          break;
+        case this.options.keyDown:
+          handleArrowDown(this);
+          break;
+        case this.options.keyRight:
+          handleArrowRight(this);
+          break;
+        case this.options.keyLeft:
+          handleArrowLeft(this);
+          break;
+        default:
+          break;
+      }
     }
-  }.bind(this);
+  };
+  return Plugin;
+}));
 
-  this.handleArrowUp = function () {
-    if (this.lineIndex - 1 < 0) return;
-    this.removeSelected();
-    this.lineIndex--;
-    if (this.columnIndex > this.grid[this.lineIndex].length - 1) this.columnIndex = 0;
-    this.addSelected();
-  }.bind(this);
 
-  this.handleArrowDown = function () {
-    if (this.lineIndex + 1 > this.grid.length - 1) return;
-    this.removeSelected();
-    this.lineIndex++;
-    if (this.columnIndex > this.grid[this.lineIndex].length - 1) this.columnIndex = 0;
-    this.addSelected();
-  }.bind(this);
+/**************
+  EXAMPLE:
+**************/
 
-  this.handleArrowRight = function () {
-    if (this.columnIndex + 1 > this.grid[this.lineIndex].length - 1) return;
-    this.removeSelected();
-    this.columnIndex++;
-    this.addSelected();
-  }.bind(this);
+//// create new Plugin instance
+// var pluginInstance = new PluginNameHere({
+//     selector: ".box",
+//     someDefaultOption: 'foo2',
+//     classToAdd: "custom-new-class-name",
+// })
 
-  this.handleArrowLeft = function () {
-    if (this.columnIndex - 1 < 0) return;
-    this.removeSelected();
-    this.columnIndex--;
-    this.addSelected();
-  }.bind(this);
-
-};
+//// access public plugin methods
+// pluginInstance.doSomething("Doing Something Else")
