@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>KeysNav Example</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="box a selected" id="a">A</div>
+    <div class="box b" id="b">B</div>
+    <div class="box c" id="c">C</div>
+    <div class="box d" id="d">D</div>
+    <div class="box e" id="e">E</div>
+    <div class="box f" id="f">F</div>
+  </div>
+
+  <script src="KeysNav.min.js"></script>
+  <script>
+    const matrix = [['a', 'b', 'c'], ['d', 'e', 'f']];
+
+    const keysnav = new KeysNav();
+    keysnav.setGrid(matrix);
+  </script>
+</body>
+
+</html>

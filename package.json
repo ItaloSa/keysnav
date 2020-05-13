@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "build": "gulp build",
     "test:report": "jest --collect-coverage"
   },
   "repository": {
@@ -23,6 +24,8 @@
   },
   "homepage": "https://github.com/ItaloSa/nav-js#readme",
   "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-minify": "^3.1.0",
     "jest": "^26.0.1"
   }
 }
