@@ -41,14 +41,6 @@
     return extended;
   };
 
-  /**
-   * Helper Functions
-   @private
-   */
-  var privateFunction = function () {
-    // Helper function, not directly acessible by instance object
-  };
-
   var addSelected = function (self) {
     var target = self.grid[self.lineIndex][self.columnIndex];
     var element = document.getElementById(target);
@@ -65,7 +57,9 @@
     if (self.lineIndex === 0) return;
     removeSelected(self);
     self.lineIndex--;
-    if (self.columnIndex > self.grid[self.lineIndex].length - 1) self.columnIndex = 0;
+    if (self.columnIndex > self.grid[self.lineIndex].length - 1) {
+      self.columnIndex = 0;
+    }
     addSelected(self);
   }
 
@@ -73,7 +67,9 @@
     if (self.lineIndex + 1 > self.grid.length - 1) return;
     removeSelected(self);
     self.lineIndex++;
-    if (self.columnIndex > self.grid[self.lineIndex].length - 1) self.columnIndex = 0;
+    if (self.columnIndex > self.grid[self.lineIndex].length - 1) {
+      self.columnIndex = 0;
+    }
     addSelected(self);
   };
 
@@ -115,14 +111,14 @@
       document.onkeydown = this.handleKeyPress.bind(this);
       return;
     },
-    setGrid: function(matrix) {
+    setGrid: function (matrix) {
       this.grid = matrix;
     },
-    setIndexes: function(line, column) {
+    setIndexes: function (line, column) {
       this.lineIndex = line;
       this.columnIndex = column;
     },
-    handleKeyPress: function(event) {
+    handleKeyPress: function (event) {
       switch (event.keyCode) {
         case this.options.keyUp:
           handleArrowUp(this);
