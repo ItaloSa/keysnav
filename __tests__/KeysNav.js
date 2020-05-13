@@ -1,4 +1,4 @@
-const KeysNav = require('../src');
+const KeysNav = require('../src/KeysNav');
 
 describe('Testing KeysNav helpers methods', () => {
 
