@@ -49,6 +49,48 @@
     // Helper function, not directly acessible by instance object
   };
 
+  var addSelected = function (self) {
+    var target = self.grid[self.lineIndex][self.columnIndex];
+    var element = document.getElementById(target);
+    element.classList.add(self.options.selectedClassName);
+  };
+
+  var removeSelected = function (self) {
+    var current = self.grid[self.lineIndex][self.columnIndex];
+    var element = document.getElementById(current);
+    element.classList.remove(self.options.selectedClassName);
+  };
+
+  var handleArrowUp = function (self) {
+    if (self.lineIndex === 0) return;
+    removeSelected(self);
+    self.lineIndex--;
+    if (self.columnIndex > self.grid[self.lineIndex].length - 1) self.columnIndex = 0;
+    addSelected(self);
+  }
+
+  var handleArrowDown = function (self) {
+    if (self.lineIndex + 1 > self.grid.length - 1) return;
+    removeSelected(self);
+    self.lineIndex++;
+    if (self.columnIndex > self.grid[self.lineIndex].length - 1) self.columnIndex = 0;
+    addSelected(self);
+  };
+
+  var handleArrowRight = function (self) {
+    if (self.columnIndex + 1 > self.grid[self.lineIndex].length - 1) return;
+    removeSelected(self);
+    self.columnIndex++;
+    addSelected(self);
+  };
+
+  var handleArrowLeft = function (self) {
+    if (self.columnIndex - 1 < 0) return;
+    removeSelected(self);
+    self.columnIndex--;
+    addSelected(self);
+  };
+
   /**
    * Plugin Object
    * @param {Object} options User options
@@ -101,18 +143,3 @@
   };
   return Plugin;
 }));
-
-
-/**************
-  EXAMPLE:
-**************/
-
-//// create new Plugin instance
-// var pluginInstance = new PluginNameHere({
-//     selector: ".box",
-//     someDefaultOption: 'foo2',
-//     classToAdd: "custom-new-class-name",
-// })
-
-//// access public plugin methods
-// pluginInstance.doSomething("Doing Something Else")
