@@ -10,15 +10,17 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    
     steps:
-    - name: Testing
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - name: Install Dependencies
+      uses: actions/setup-node@v1
       with:
         node-version: 12
     
-    - name: Install Dependencies
-    - run: npm ci
-    
+    - name: Intall Dependencies
+      run: npm ci
+      
     - name: Test
-    - run: npm test
+      run: npm test
+      
