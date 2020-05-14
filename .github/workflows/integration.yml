@@ -10,16 +10,17 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-
+    
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Install Dependencies
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm test
+        node-version: 12
+    
+    - name: Intall Dependencies
+      run: npm ci
+      
+    - name: Test
+      run: npm test
+      
