@@ -214,28 +214,7 @@ describe('Testing KeysNav navigation', () => {
 
   });
 
-  //
 
-  test('should avoid move right when is on boundaries', () => {
-    document.body.innerHTML = `
-      <div id="col00" class="selected"></div>
-    `;
-
-    const keysNav = new KeysNav();
-    const matrix = [['col00']];
-    keysNav.setGrid(matrix);
-
-    const event = new KeyboardEvent('keydown', { 'keyCode': 39 });
-    document.dispatchEvent(event);
-
-    expect(keysNav.columnIndex).toBe(0);
-    expect(document
-      .getElementById('col00')
-      .classList
-      .contains('selected')
-    ).toBe(true);
-
-  });
 
   test('should move right', () => {
     document.body.innerHTML = `
@@ -264,7 +243,86 @@ describe('Testing KeysNav navigation', () => {
 
   });
 
+  test('should avoid move right when is on boundaries', () => {
+    document.body.innerHTML = `
+      <div id="col00" class="selected"></div>
+    `;
+
+    const keysNav = new KeysNav();
+    const matrix = [['col00']];
+    keysNav.setGrid(matrix);
+
+    const event = new KeyboardEvent('keydown', { 'keyCode': 39 });
+    document.dispatchEvent(event);
+
+    expect(keysNav.columnIndex).toBe(0);
+    expect(document
+      .getElementById('col00')
+      .classList
+      .contains('selected')
+    ).toBe(true);
+
+  });
+
+  test('should go to the neaest right', () => {
+    document.body.innerHTML = `
+      <div id="col00"></div>
+      <div id="col10" class="selected"></div>
+      <div id="col01"></div>
+    `;
+
+    const keysNav = new KeysNav();
+    const matrix = [['col00', 'col01'], ['col10']];
+    keysNav.setGrid(matrix);
+    keysNav.setIndexes(1, 0);
+
+    const event = new KeyboardEvent('keydown', { 'keyCode': 39 });
+    document.dispatchEvent(event);
+
+    expect(keysNav.lineIndex).toBe(0);
+    expect(keysNav.columnIndex).toBe(1);
+    expect(document
+      .getElementById('col10')
+      .classList
+      .contains('selected')
+    ).toBe(false);
+    expect(document
+      .getElementById('col01')
+      .classList
+      .contains('selected')
+    ).toBe(true);
+
+  });
+
   //
+
+  test('should move left', () => {
+    document.body.innerHTML = `
+      <div id="col00"></div>
+      <div id="col01" class="selected"></div>
+    `;
+
+    const keysNav = new KeysNav();
+    const matrix = [['col00', 'col01']];
+    keysNav.setGrid(matrix);
+    keysNav.setIndexes(0, 1);
+
+    const event = new KeyboardEvent('keydown', { 'keyCode': 37 });
+    document.dispatchEvent(event);
+
+    expect(keysNav.columnIndex).toBe(1);
+    expect(document
+      .getElementById('col00')
+      .classList
+      .contains('selected')
+    ).toBe(false);
+    expect(document
+      .getElementById('col01')
+      .classList
+      .contains('selected')
+    ).toBe(true);
+
+  });
 
   test('should avoid move left when is on boundaries', () => {
     document.body.innerHTML = `
@@ -281,34 +339,6 @@ describe('Testing KeysNav navigation', () => {
     expect(keysNav.columnIndex).toBe(0);
     expect(document
       .getElementById('col00')
-      .classList
-      .contains('selected')
-    ).toBe(true);
-
-  });
-
-  test('should move left', () => {
-    document.body.innerHTML = `
-      <div id="col00"></div>
-      <div id="col01" class="selected"></div>
-    `;
-
-    const keysNav = new KeysNav();
-    const matrix = [['col00', 'col01']];
-    keysNav.setGrid(matrix);
-    keysNav.setIndexes(0, 1);
-
-    const event = new KeyboardEvent('keydown', { 'keyCode': 39 });
-    document.dispatchEvent(event);
-
-    expect(keysNav.columnIndex).toBe(1);
-    expect(document
-      .getElementById('col00')
-      .classList
-      .contains('selected')
-    ).toBe(false);
-    expect(document
-      .getElementById('col01')
       .classList
       .contains('selected')
     ).toBe(true);

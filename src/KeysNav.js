@@ -73,17 +73,34 @@
     addSelected(self);
   };
 
+  var firstNearestNextTo = function (self, side) {
+    var max = self.lineIndex;
+    for (var verifLineIdx = max; verifLineIdx >= 0; verifLineIdx--) {
+      if (side === 1) {
+        if (self.grid[verifLineIdx].length - 1 >= self.columnIndex + 1) {
+          return [verifLineIdx, self.columnIndex + side];
+        }
+      } else {
+        if (self.grid[verifLineIdx].length - 1 <= self.columnIndex - 1) {
+          return [verifLineIdx, self.columnIndex + side];
+        }
+      }
+    }
+  };
+
   var handleArrowRight = function (self) {
-    if (self.columnIndex + 1 > self.grid[self.lineIndex].length - 1) return;
+    var nearestNextTo = firstNearestNextTo(self, +1);
+    if (!nearestNextTo) return;
     removeSelected(self);
-    self.columnIndex++;
+    self.setIndexes(nearestNextTo[0], nearestNextTo[1]);
     addSelected(self);
   };
 
   var handleArrowLeft = function (self) {
-    if (self.columnIndex - 1 < 0) return;
+    var nearestNextTo = firstNearestNextTo(self, -1);
+    if (!nearestNextTo) return;
     removeSelected(self);
-    self.columnIndex--;
+    self.setIndexes(nearestNextTo[0], nearestNextTo[1]);
     addSelected(self);
   };
 
