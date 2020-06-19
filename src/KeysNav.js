@@ -113,6 +113,7 @@
     this.grid = null;
     this.lineIndex = 0;
     this.columnIndex = 0;
+    this.customHandlers = {};
 
     this.options = extend(options);
     this.init();
@@ -136,6 +137,12 @@
       this.columnIndex = column;
     },
     handleKeyPress: function (event) {
+      var customHandler = this.customHandlers[event.keyCode];
+      if (customHandler) {
+        customHandler();
+        return;
+      }
+
       switch (event.keyCode) {
         case this.options.keyUp:
           handleArrowUp(this);
@@ -152,6 +159,9 @@
         default:
           break;
       }
+    },
+    addKeyHandler: function(keyCode, handler) {
+      this.customHandlers[keyCode] = handler;
     }
   };
   return Plugin;

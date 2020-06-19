@@ -50,6 +50,28 @@ describe('Testing KeysNav helpers methods', () => {
 
   });
 
+  test('should register new key handlers', () => {
+
+    const keysNav = new KeysNav();
+    keysNav.addKeyHandler(13, ()=>{});
+
+    expect(keysNav.customHandlers).toHaveProperty('13');
+
+  });
+
+  test('should call custom key handler', () => {
+
+    const handlerSpy = jest.fn();
+    const keysNav = new KeysNav();
+    keysNav.addKeyHandler(13, handlerSpy);
+
+    const event = new KeyboardEvent('keydown', { 'keyCode': 13 });
+    document.dispatchEvent(event);
+
+    expect(handlerSpy).toHaveBeenCalled();
+
+  });
+
 });
 
 describe('Testing KeysNav navigation', () => {
