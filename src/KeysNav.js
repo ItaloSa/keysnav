@@ -81,7 +81,7 @@
           return [verifLineIdx, self.columnIndex + side];
         }
       } else {
-        if (self.grid[verifLineIdx].length - 1 <= self.columnIndex - 1) {
+        if (self.columnIndex > 0 && self.columnIndex <= self.grid[verifLineIdx].length - 1) {
           return [verifLineIdx, self.columnIndex + side];
         }
       }

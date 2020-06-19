@@ -310,17 +310,17 @@ describe('Testing KeysNav navigation', () => {
     const event = new KeyboardEvent('keydown', { 'keyCode': 37 });
     document.dispatchEvent(event);
 
-    expect(keysNav.columnIndex).toBe(1);
+    expect(keysNav.columnIndex).toBe(0);
     expect(document
       .getElementById('col00')
       .classList
       .contains('selected')
-    ).toBe(false);
+    ).toBe(true);
     expect(document
       .getElementById('col01')
       .classList
       .contains('selected')
-    ).toBe(true);
+    ).toBe(false);
 
   });
 
