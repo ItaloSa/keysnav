@@ -59,17 +59,30 @@ describe('Testing KeysNav helpers methods', () => {
 
   });
 
+  test('should get selected item id', () => {
+
+    const keysNav = new KeysNav();
+    const matrix = [['col00']];
+    keysNav.setGrid(matrix);
+
+    expect(keysNav.getSelected()).toBe('col00');
+
+  });
+
   test('should call custom key handler', () => {
 
     const handlerSpy = jest.fn();
     const keysNav = new KeysNav();
+    const matrix = [['col00']];
+    keysNav.setGrid(matrix);
     keysNav.addKeyHandler(13, handlerSpy);
 
     const event = new KeyboardEvent('keydown', { 'keyCode': 13 });
     document.dispatchEvent(event);
 
     expect(handlerSpy).toHaveBeenCalled();
-    expect(handlerSpy.mock.calls[0][0]).toBeInstanceOf(KeyboardEvent)
+    expect(handlerSpy.mock.calls[0][0]).toBeInstanceOf(KeyboardEvent);
+    expect(handlerSpy.mock.calls[0][1]).toBe('col00');
 
   });
 

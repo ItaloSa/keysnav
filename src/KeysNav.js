@@ -137,7 +137,7 @@
     handleKeyPress: function (event) {
       var customHandler = this.customHandlers[event.keyCode];
       if (customHandler) {
-        customHandler(event);
+        customHandler(event, this.getSelected());
         return;
       }
 
@@ -160,6 +160,9 @@
     },
     addKeyHandler: function(keyCode, handler) {
       this.customHandlers[keyCode] = handler;
+    },
+    getSelected: function() {
+      return this.grid[this.lineIndex][this.columnIndex];
     }
   };
   return Plugin;
