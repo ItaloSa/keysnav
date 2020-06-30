@@ -69,6 +69,7 @@ describe('Testing KeysNav helpers methods', () => {
     document.dispatchEvent(event);
 
     expect(handlerSpy).toHaveBeenCalled();
+    expect(handlerSpy.mock.calls[0][0]).toBeInstanceOf(KeyboardEvent)
 
   });
 

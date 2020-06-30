@@ -2,9 +2,7 @@
 
   var pluginName = 'KeysNav';
 
-  if (typeof define === 'function' && define.amd) {
-    define([], factory(pluginName));
-  } else if (typeof exports === 'object') {
+  if (typeof exports === 'object') {
     module.exports = factory(pluginName);
   } else {
     root[pluginName] = factory(pluginName);
@@ -139,7 +137,7 @@
     handleKeyPress: function (event) {
       var customHandler = this.customHandlers[event.keyCode];
       if (customHandler) {
-        customHandler();
+        customHandler(event);
         return;
       }
 
